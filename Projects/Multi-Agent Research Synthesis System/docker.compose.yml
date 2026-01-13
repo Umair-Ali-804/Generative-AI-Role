@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  research-synthesis:
+    build: .
+    container_name: research-synthesis-system
+    env_file:
+      - .env
+    volumes:
+      - ./output:/app/output
+      - ./queries.txt:/app/queries.txt
+    stdin_open: true
+    tty: true
+    networks:
+      - research-net
+
+networks:
+  research-net:
+    driver: bridge
+
+# Usage Examples:
+# 
+# Interactive mode:
+# docker-compose run --rm research-synthesis python main.py -i
+#
+# Single query:
+# docker-compose run --rm research-synthesis python main.py -q "Your query here"
+#
+# Batch processing:
+# docker-compose run --rm research-synthesis python main.py -b queries.txt -o output/
